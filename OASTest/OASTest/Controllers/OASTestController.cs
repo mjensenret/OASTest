@@ -2,7 +2,6 @@
 using OASTest.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OASTest.Models;
 using RestSharp;
 using RestSharp.Deserializers;
 using System;
@@ -32,46 +31,45 @@ namespace OASTest.Controllers
         {
             
             
-            if (setAuth("", ""))
-            {
-                var tagModel = getMultipleTagValues();
+            var tagModel = getMultipleTagValues("HarringtonStation.Amps");
 
-                var model = (tagModel
-                    .OrderBy(n => n.path)
-                    )
-                    .Select(x => new
-                    {
-                        x.path,
-                        Desc = x.parameters[0].Value.Select(y => y.Desc),
-                        Reading = x.parameters[0].Value.Select(y => y.Reading),
-                        Units = x.parameters[0].Value.Select(y => y.Units)
+            var model = (tagModel
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    x.path,
+                    Desc = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    Units = x.parameters[0].Value.Select(y => y.Units)
 
-                    })
-                    .ToList()
-                    .Select(y => new TagViewModel()
-                    {
-                        Path = y.path,
-                        Name = y.Desc.First(),
-                        Reading = y.Reading.First(),
-                        Units = y.Units.First()                         
-                    });
+                })
+                .ToList()
+                .Select(y => new TagViewModel()
+                {
+                    Path = y.path,
+                    Name = y.Desc.First(),
+                    Reading = y.Reading.First(),
+                    Units = y.Units.First()                         
+                });
 
-                //tagModel = getSpecificTagValue();
-                return View(model);
-
-            }
-            else
-            {
-                Console.WriteLine("Didn't work");
-                return View();
-            };
-          
-
-
+            //tagModel = getSpecificTagValue();
+            return View(model);
 
         }
 
-        public bool setAuth(string user, string pass)
+        public async Task<ActionResult> TankLevels()
+        {
+            //if(setAuth("",""))
+            //{
+            //    //var tagChart = getSpecificTagValue();
+
+                
+            //}
+            return View();
+        }
+
+        public AuthorizationModel setAuth(string user, string pass)
         {
             var client = new RestClient(baseUrl + "authenticate");
             var request = new RestRequest(Method.POST);
@@ -80,34 +78,40 @@ namespace OASTest.Controllers
             request.AddHeader("Cache-Control", "no-cache");
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("undefined", "{\n\t\"username\":\"\",\n\t\"password\":\"\"\n}", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
+            var response = client.Execute<AuthorizationModel>(request);
 
-            JObject obj = JObject.Parse(response.Content);
-            JObject ojObject = (JObject)obj["data"];
+            //JObject obj = JObject.Parse(response.Content);
+            //JObject ojObject = (JObject)obj["data"];
 
-            try
-            {
-                clientId = (String)ojObject["clientid"];
-                token = (String)ojObject["token"];
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Something is not happy here: " + e);
+            //try
+            //{
+            //    clientId = (String)ojObject["clientid"];
+            //    token = (String)ojObject["token"];
+            //    return true;
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Something is not happy here: " + e);
 
-                return false;
-            }
+            //    return false;
+            //}
+
+            AuthorizationModel authModel = response.Data;
+
+            return authModel;
 
         }
 
-        public List<TagList> getMultipleTagValues()
+        public List<TagList> getMultipleTagValues(string folder)
         {
-            var client = new RestClient(baseUrl + "tags?params=true&ref=HarringtonStation&recurse=true");
+            
+            var auth = setAuth("", "");
+            var client = new RestClient(baseUrl + "tags?params=true&ref="+ folder + "&recurse=true");
             var request = new RestRequest(Method.GET);
             request.AddHeader("Cache-Control", "no-cache");
             request.AddHeader("Authorization", "Basic Og==");
-            request.AddHeader("token", token);
-            request.AddHeader("clientid", clientId);
+            request.AddHeader("token", auth.data.token);
+            request.AddHeader("clientid", auth.data.clientid);
             request.AddHeader("Content-Type", "application/json");
             var response = client.Execute<List<TagList>>(request);
 
@@ -119,19 +123,20 @@ namespace OASTest.Controllers
             return tags;
         }
 
-        public List<PLCTags> getSpecificTagValue()
+        public List<SingleTagWithParams> getSpecificTagValue(String path)
         {
-            var client = new RestClient(baseUrl + "tags?path=HarringtonStation.Amps.CONVEYOR_240_AMPS");
+            var auth = setAuth("", "");
+            var client = new RestClient(baseUrl + "tags?path=" + path);
             var request = new RestRequest(Method.GET);
             request.AddHeader("Cache-Control", "no-cache");
             request.AddHeader("Authorization", "Basic Og==");
-            request.AddHeader("token", token);
-            request.AddHeader("clientid", clientId);
+            request.AddHeader("token", auth.data.token);
+            request.AddHeader("clientid", auth.data.clientid);
             request.AddHeader("Content-Type", "application/json");
             IRestResponse response = client.Execute(request);
-            var response2 = client.Execute<List<PLCTags>>(request);
+            var response2 = client.Execute<List<SingleTagWithParams>>(request);
 
-            List<PLCTags> tags = response2.Data;
+            List<SingleTagWithParams> tags = response2.Data;
 
             return tags;
         }

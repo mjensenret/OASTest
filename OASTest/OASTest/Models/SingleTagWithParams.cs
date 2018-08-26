@@ -8,25 +8,25 @@ using System.Web;
 namespace OASTest.Models
 {
     //[DataContract]
-    public class PLCTags
+    public class SingleTagWithParams
     {
         public string path { get; set; }
         
         public string TagName { get; set; }
         public float value { get; set; }
-        //public List<Parameters> parameters { get; set; }
+        public List<ParameterContainer> parameters { get; set; }
     }
 
-    //public class Parameters
-    //{
-    //    public List<Value> value { get; set; }
-    //}
+    public class ParameterContainer
+    {
+        public List<ParameterValue> value { get; set; }
+    }
 
-    //public class Value
-    //{
-    //    public string Desc { get; set; }
-    //    public string Units { get; set; } 
-    //}
+    public class ParameterValue
+    {
+        public string Desc { get; set; }
+        public string Units { get; set; }
+    }
 
 
 }
