@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+    Current Amps
+    <div>
+        Conveyor 240: <label id="conveyor240" opc-tag-txt='{
+    "tag": "HarringtonStation.Amps.CONVEYOR_240_AMPS.Value",
+    "config": {
+        "formats": {
+            "float": "#,##.00"
+        }
+    }
+}'></label>
+    </div>
+    <div>
+        Conveyor 250: <label id="conveyor250" opc-tag-txt='{
+    "tag": "HarringtonStation.Amps.CONVEYOR_250_AMPS.Value",
+    "config": {
+        "formats": {
+            "float": "#,##.00"
+        }
+    }
+}'></label>
+    </div>
+    <div>
+        Conveyor 400: <label id="conveyor400" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_400_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Conveyor 410: <label id="conveyor410" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_410_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Conveyor 440: <label id="conveyor440" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_440_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Conveyor 500: <label id="conveyor500" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_410_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Conveyor 510: <label id="conveyor510" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_510_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Conveyor 540: <label id="conveyor540" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CONVEYOR_540_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Crusher 310: <label id="crusher310" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CRUSHER_310_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+    <div>
+        Crusher 320: <label id="crusher320" opc-tag-txt='{
+        "tag": "HarringtonStation.Amps.CRUSHER_320_AMPS.Value",
+        "config": {
+            "formats": {
+                "float": "#,##.00"
+            }
+        }
+    }'></label>
+    </div>
+</div>
+<div>
+    Tonnage
+</div>
+<div class="canvasContainer">
+    <canvas id="canvasRadial1">No canvas in your browser...sorry...</canvas>
+</div>
+
+
+<script type="text/javascript">
+    OPC_config = {
+        token: '7e61b230-481d-4551-b24b-ba9046e3d8f2',
+        serverURL: 'http://ops-dev.savageservices.com:58725'
+    };
+
+    var radial1 = new steelseries.Radial('canvasRadial1', {
+        gaugeType: steelseries.GaugeType.TYPE1,
+        size: 250,
+        section: sections,
+        area: areas,
+        titleString: 'Tank 1 Level',
+        unitString: 'Ft',
+        threshold: 75,
+        frameDesign: steelseries.FrameDesign.CHROME,
+        backgroundColor: steelseries.BackgroundColor.BROWN,
+        lcdVisible: true
+    });
+
+    // Set up a script interval to check and update the value every 1000ms.
+    setInterval(function () {
+        var sv = OPC.get_value("HarringtonStation.Weights.U1_Total_Tonnage.Value");
+        radial1.setValueAnimated(parseFloat(sv));
+    }, 1000);
+
+</script>
+

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<OASTest.ViewModels.TagViewModel>
+@{
+    ViewBag.Title = "WsTest";
+}
+
+@(Html.DevExtreme().DataGrid()
+        .ID("tagGrid")
+    .ShowBorders(true)
+    .DataSource(Model)
+    .Paging(p => p.PageSize(50))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Columns(c =>
+    {
+        c.Add()
+        .DataField("Path")
+        .Visible(false);
+        c.Add()
+        .DataField("Name");
+        c.Add()
+        .DataField("Reading");
+        c.Add()
+        .DataField("Units");
+    })
+)
+
