@@ -311,6 +311,7 @@
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Models\MultipleTagsWithParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\OASRestService.cs" />
     <Compile Include="ViewModels\GaugeViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
   </ItemGroup>

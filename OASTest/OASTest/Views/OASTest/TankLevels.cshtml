@@ -1,7 +1,9 @@
-﻿
+﻿@model IEnumerable<OASTest.ViewModels.TagGroups>
 @{
     ViewBag.Title = "TankLevels";
 }
 
-@*Thinking showing multiple tank levels here*@
-
+@using (Html.BeginForm("TankLevels"))
+{
+    @Html.DropDownList("TagGroup", (IEnumerable<SelectListItem>)ViewBag.TagGroups, new { onchange = "this.form.submit();" })
+}

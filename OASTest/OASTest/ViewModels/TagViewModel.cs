@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OASTest.ViewModels
 {
@@ -12,4 +13,14 @@ namespace OASTest.ViewModels
         public float Reading { get; set; }
         public string Units { get; set; }
     }
+
+    public class TagGroups
+    {
+        public string status { get; set; }
+        public List<String> data { get; set; }
+
+        public IEnumerable<SelectListItem> tagGroups { get; set; }
+    }
+
+    
 }

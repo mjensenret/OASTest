@@ -1,4 +1,5 @@
 ﻿using OASTest.Models;
+using OASTest.Service;
 using OASTest.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,14 +12,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DevExtreme.AspNet.Mvc;
+using DevExtreme.AspNet.Data;
 
 namespace OASTest.Controllers
 {
     public class OASTestController : Controller
     {
-        string baseUrl = "http://fieldvision.savageservices.com:58725/OASREST/v2/";
-        string clientId = "";
-        string token = "";
+        OASRestService svc = new OASRestService();
 
 
         // GET: OASTest
@@ -29,9 +30,9 @@ namespace OASTest.Controllers
 
         public async Task<ActionResult> WsTest()
         {
-            
-            
-            var tagModel = getMultipleTagValues("HarringtonStation.Amps");
+            ViewBag.TagGroups = svc.GetTagGroupsDropdown("");
+
+            var tagModel = svc.GetMultipleTagValues("HarringtonStation");
 
             var model = (tagModel
                 .OrderBy(n => n.path)
@@ -58,87 +59,72 @@ namespace OASTest.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> WsTest(FormCollection form)
+        {
+            string strDDLValue = form["TagGroup"].ToString();
+            
+
+            var tagModel = svc.GetMultipleTagValues(strDDLValue);
+
+            var model = (tagModel
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    x.path,
+                    Desc = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    Units = x.parameters[0].Value.Select(y => y.Units)
+
+                })
+                .ToList()
+                .Select(y => new TagViewModel()
+                {
+                    Path = y.path,
+                    Name = y.Desc.First(),
+                    Reading = y.Reading.First(),
+                    Units = y.Units.First()
+                });
+
+            ViewBag.TagGroups = svc.GetTagGroupsDropdown(strDDLValue);
+
+            return View(model);
+        }
+
         public async Task<ActionResult> TankLevels()
         {
-            //if(setAuth("",""))
-            //{
-            //    //var tagChart = getSpecificTagValue();
+            ViewBag.TagGroups = svc.GetTagGroupsDropdown("");
 
-                
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> TankLevels(FormCollection form)
+        {
+            //var taggroups = svc.GetTagGroups();
+            //var folders= taggroups.Select(x => x.data);
+            //List<String> data = folders.First();
+
+            //List<SelectListItem> result = new List<SelectListItem>();
+
+            //for (var i = 0; i < data.Count(); i++)
+            //{
+            //    result.Add(new SelectListItem { Text = data[i], Value = data[i] });
             //}
+            string strDDLValue = form["TagGroup"].ToString();
+            ViewBag.TagGroups = svc.GetTagGroupsDropdown(strDDLValue);
+
+
             return View();
         }
 
-        public AuthorizationModel setAuth(string user, string pass)
-        {
-            var client = new RestClient(baseUrl + "authenticate");
-            var request = new RestRequest(Method.POST);
-            request.RequestFormat = DataFormat.Json;
-            //request.AddHeader("Postman-Token", "5eea52d2-ffc7-4ff4-a915-82be2e7fd562");
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("undefined", "{\n\t\"username\":\"\",\n\t\"password\":\"\"\n}", ParameterType.RequestBody);
-            var response = client.Execute<AuthorizationModel>(request);
 
-            //JObject obj = JObject.Parse(response.Content);
-            //JObject ojObject = (JObject)obj["data"];
+        //[HttpGet]
+        //public ActionResult GetGroups(DataSourceLoadOptions loadOptions)
+        //{
+        //    return Content(JsonConvert.SerializeObject(DataSourceLoader.Load(svc.GetTagGroups(), loadOptions)), "application/json");
+        //}
 
-            //try
-            //{
-            //    clientId = (String)ojObject["clientid"];
-            //    token = (String)ojObject["token"];
-            //    return true;
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("Something is not happy here: " + e);
 
-            //    return false;
-            //}
-
-            AuthorizationModel authModel = response.Data;
-
-            return authModel;
-
-        }
-
-        public List<TagList> getMultipleTagValues(string folder)
-        {
-            
-            var auth = setAuth("", "");
-            var client = new RestClient(baseUrl + "tags?params=true&ref="+ folder + "&recurse=true");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Authorization", "Basic Og==");
-            request.AddHeader("token", auth.data.token);
-            request.AddHeader("clientid", auth.data.clientid);
-            request.AddHeader("Content-Type", "application/json");
-            var response = client.Execute<List<TagList>>(request);
-
-            //JObject tags = JObject.Parse(response.Content);
-            List<TagList> tags = response.Data;
-
-            
-
-            return tags;
-        }
-
-        public List<SingleTagWithParams> getSpecificTagValue(String path)
-        {
-            var auth = setAuth("", "");
-            var client = new RestClient(baseUrl + "tags?path=" + path);
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Authorization", "Basic Og==");
-            request.AddHeader("token", auth.data.token);
-            request.AddHeader("clientid", auth.data.clientid);
-            request.AddHeader("Content-Type", "application/json");
-            IRestResponse response = client.Execute(request);
-            var response2 = client.Execute<List<SingleTagWithParams>>(request);
-
-            List<SingleTagWithParams> tags = response2.Data;
-
-            return tags;
-        }
     }
 }
