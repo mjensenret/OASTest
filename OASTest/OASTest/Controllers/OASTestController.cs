@@ -188,5 +188,36 @@ namespace OASTest.Controllers
 
             return PartialView("_tankChart", model);
         }
+
+        public ActionResult HarringtonDashboard()
+        {
+            return View();
+        }
+        public ActionResult amps()
+        {
+            var amperageTags = svc.GetMultipleTagValues("HarringtonStation.Amps");
+
+            var model = (amperageTags
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    TagName = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    HighLevel = x.parameters[0].Value.Select(y => y.HighRange),
+                    LowLevel = x.parameters[0].Value.Select(y => y.LowRange)
+                })
+                .ToList()
+                .Select(y => new GaugeViewModel()
+                {
+                    tagName = y.TagName.First(),
+                    tagValue = y.Reading.First(),
+                    maxValue = y.HighLevel.First(),
+                    minValue = y.LowLevel.First()
+
+                });
+
+            return PartialView("_ampsPartialView", model);
+        }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OASTest.ViewModels.GaugeViewModel>
+
+<div class="flex-container">
+    @foreach (var amp in Model)
+    {
+
+        <div class="gauges">
+            @(Html.DevExtreme().CircularGauge()
+                .ID(@amp.tagName)
+                .Size(si => si.Height(200))
+                .Scale(s => s
+                    .StartValue(@amp.minValue)
+                    .EndValue(@amp.maxValue)
+                    )
+                .RangeContainer(c => c
+                    .Offset(10)
+                    .Ranges(r =>
+                    {
+                        //r.Add().StartValue(@amp.minValue).EndValue((@amp.minValue + 5000)).Color("#FF0000");
+                        //r.Add().StartValue((@amp.maxValue - 5000)).EndValue(@amp.maxValue).Color("#FF0000");
+                    })
+                    .Width(15)
+                    )
+                .Value(@amp.tagValue)
+                .Title(t => t
+                    .Text(@amp.tagName)
+                    .Font(f => f
+                        .Size(14)
+                        .Weight(600)
+                        )
+                    )
+                .ValueIndicator(v => v
+                    .Color("#FF1111")
+                    .SpindleSize(20)
+                    .SpindleGapSize(0)
+                    .Type(GaugeIndicatorType.TriangleNeedle)
+                    .Width(10)
+                    )
+                .Tooltip(tt => tt.Enabled(true))
+            )
+        </div>
+
+    }
+</div>

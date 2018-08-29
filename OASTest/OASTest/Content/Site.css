@@ -3,8 +3,21 @@
 }
 .flex-container {
     display: flex;
-    /*background-color: red;*/
+    /*background-color:darkgray;*/
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.gauges {
+    
+}
+
+#tankImage {
+    background-color: red;
+    position:relative;
+}
+#tankImage > div {
+    position:absolute;
+    background-color: green;
 }
