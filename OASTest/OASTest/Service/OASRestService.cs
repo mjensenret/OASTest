@@ -54,10 +54,10 @@ namespace OASTest.Service
             return tags;
         }
 
-        public List<SingleTagWithParams> GetSpecificTagValue(String path)
+        public List<TagList> GetSpecificTagValue(String path)
         {
             var auth = setAuth("", "");
-            var client = new RestClient(baseUrl + "tags?path=" + path);
+            var client = new RestClient(baseUrl + "tags?path=" + path + "&params=true");
             var request = new RestRequest(Method.GET);
             request.AddHeader("Cache-Control", "no-cache");
             request.AddHeader("Authorization", "Basic Og==");
@@ -65,9 +65,9 @@ namespace OASTest.Service
             request.AddHeader("clientid", auth.data.clientid);
             request.AddHeader("Content-Type", "application/json");
             IRestResponse response = client.Execute(request);
-            var response2 = client.Execute<List<SingleTagWithParams>>(request);
+            var response2 = client.Execute<List<TagList>>(request);
 
-            List<SingleTagWithParams> tags = response2.Data;
+            List<TagList> tags = response2.Data;
 
             return tags;
         }

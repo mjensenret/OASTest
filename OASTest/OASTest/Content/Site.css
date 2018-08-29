@@ -9,9 +9,10 @@
     justify-content: center;
 }
 
-/*.gauges {
-    
-}*/
+
+.ampTrendGraph {
+    background-color: red;
+}
 
 #tankImage {
     background-color: red;

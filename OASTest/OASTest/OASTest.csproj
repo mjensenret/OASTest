@@ -223,6 +223,31 @@
     <Content Include="Scripts\localization\dx.messages.ru.js" />
     <Content Include="Scripts\localization\dx.messages.sv.js" />
     <Content Include="Scripts\localization\dx.messages.zh.js" />
+    <Content Include="Scripts\OAS\datatables\css\jquery.dataTables.css" />
+    <Content Include="Scripts\OAS\datatables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\OAS\datatables\images\back_disabled.png" />
+    <Content Include="Scripts\OAS\datatables\images\back_enabled.png" />
+    <Content Include="Scripts\OAS\datatables\images\back_enabled_hover.png" />
+    <Content Include="Scripts\OAS\datatables\images\favicon.ico" />
+    <Content Include="Scripts\OAS\datatables\images\forward_disabled.png" />
+    <Content Include="Scripts\OAS\datatables\images\forward_enabled.png" />
+    <Content Include="Scripts\OAS\datatables\images\forward_enabled_hover.png" />
+    <Content Include="Scripts\OAS\datatables\images\sort_asc.png" />
+    <Content Include="Scripts\OAS\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\OAS\datatables\images\sort_both.png" />
+    <Content Include="Scripts\OAS\datatables\images\sort_desc.png" />
+    <Content Include="Scripts\OAS\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\OAS\datatables\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot.crosshair.min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot.min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot.time.min.js" />
+    <Content Include="Scripts\OAS\lib\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\OAS\lib\jquery.animate-colors-min.js" />
+    <Content Include="Scripts\OAS\lib\jquery.numberformatter-1.2.3.min.js" />
+    <Content Include="Scripts\OAS\lib\json2.js" />
+    <Content Include="Scripts\OAS\opc-lib-min.js" />
+    <Content Include="Scripts\OAS\steelseries-min.js" />
+    <Content Include="Scripts\OAS\tween-min.js" />
     <Content Include="Scripts\vectormap-data\africa.js" />
     <Content Include="Scripts\vectormap-data\canada.js" />
     <Content Include="Scripts\vectormap-data\eurasia.js" />
@@ -331,6 +356,7 @@
     <Compile Include="ViewModels\GaugeViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

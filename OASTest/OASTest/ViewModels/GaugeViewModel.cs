@@ -7,6 +7,7 @@ namespace OASTest.ViewModels
 {
     public class GaugeViewModel
     {
+        public string tagPath { get; set; }
         public string tagName { get; set; }
         public int maxValue { get; set; }
         public int minValue { get; set; }

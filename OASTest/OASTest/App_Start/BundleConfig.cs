@@ -20,6 +20,10 @@ namespace OASTest {
             scriptBundle
                 .Include("~/Scripts/bootstrap.js");
 
+            //OAS Scripts
+            scriptBundle
+                .IncludeDirectory("~/Scripts/OAS/", "*.js");
+
             // Bootstrap
             styleBundle
                 .Include("~/Content/bootstrap.css");

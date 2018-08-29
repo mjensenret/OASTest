@@ -202,6 +202,7 @@ namespace OASTest.Controllers
                 )
                 .Select(x => new
                 {
+                    TagPath = x.path,
                     TagName = x.parameters[0].Value.Select(y => y.Desc),
                     Reading = x.parameters[0].Value.Select(y => y.Reading),
                     HighLevel = x.parameters[0].Value.Select(y => y.HighRange),
@@ -210,6 +211,7 @@ namespace OASTest.Controllers
                 .ToList()
                 .Select(y => new GaugeViewModel()
                 {
+                    tagPath = y.TagPath,
                     tagName = y.TagName.First(),
                     tagValue = y.Reading.First(),
                     maxValue = y.HighLevel.First(),
@@ -244,6 +246,15 @@ namespace OASTest.Controllers
 
                 });
             return PartialView("_tonsPartialView", model);
+        }
+
+        public void ampTrend(string tagPath)
+        {
+            var name = svc.GetSpecificTagValue(tagPath);
+
+
+
+
         }
     }
 }

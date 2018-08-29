@@ -25,12 +25,19 @@
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.Chart }
     )
+    <script type="text/javascript">
+        OPC_config =
+            {
+                token: 'ed4dd22f-18d2-4103-bfe9-af586d5f4ad4',
+                serverURL: 'http://ops-dev.savageservices.com:58725'
+            };
+    </script>
 </head>
 
 <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -50,7 +57,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid">
         @RenderBody()
     </div>
 </body>

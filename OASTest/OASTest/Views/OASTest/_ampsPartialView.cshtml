@@ -4,10 +4,13 @@
     @foreach (var amp in Model)
     {
 
-        <div class="gauges">
+        <div class="gauges col-lg-2">
             @(Html.DevExtreme().CircularGauge()
                 .ID(@amp.tagName)
-                .Size(si => si.Height(200))
+                .Size(si => si
+                    .Height(200)
+                //    .Width(200)
+                    )
                 .Scale(s => s
                     .StartValue(@amp.minValue)
                     .EndValue(@amp.maxValue)
@@ -38,7 +41,13 @@
                     )
                 .Tooltip(tt => tt.Enabled(true))
             )
+            @*@Html.Action("ampTrend", new { @amp.tagPath }) @amp.tagName*@
+            <div class="ampTrendGraph" style="width:400px;">
+                @Html.Action("ampTrend", new { @amp.tagPath }) @amp.tagName
+            </div>
         </div>
+
+
 
     }
 </div>
