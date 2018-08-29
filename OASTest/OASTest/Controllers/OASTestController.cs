@@ -1,4 +1,5 @@
-﻿using OASTest.Models;
+﻿using DevExpress.Web.Mvc;
+using OASTest.Models;
 using OASTest.Service;
 using OASTest.ViewModels;
 using Newtonsoft.Json;
@@ -94,37 +95,98 @@ namespace OASTest.Controllers
 
         public async Task<ActionResult> TankLevels()
         {
-            ViewBag.TagGroups = svc.GetTagGroupsDropdown("");
+            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
 
-            return View();
+            var model = (tankLevelTags
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    TagName = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    HighLevel = x.parameters[0].Value.Select(y => y.HighRange),
+                    LowLevel = x.parameters[0].Value.Select(y => y.LowRange)
+                })
+                .ToList()
+                .Select(y => new GaugeViewModel()
+                {
+                    tagName = y.TagName.First(),
+                    tagValue = y.Reading.First(),
+                    maxValue = y.HighLevel.First(),
+                    minValue = y.LowLevel.First()
+
+                });
+
+            return View(model);
         }
         [HttpPost]
         public async Task<ActionResult> TankLevels(FormCollection form)
         {
-            //var taggroups = svc.GetTagGroups();
-            //var folders= taggroups.Select(x => x.data);
-            //List<String> data = folders.First();
+            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
 
-            //List<SelectListItem> result = new List<SelectListItem>();
-
-            //for (var i = 0; i < data.Count(); i++)
-            //{
-            //    result.Add(new SelectListItem { Text = data[i], Value = data[i] });
-            //}
-            string strDDLValue = form["TagGroup"].ToString();
-            ViewBag.TagGroups = svc.GetTagGroupsDropdown(strDDLValue);
+            //string strDDLValue = form["TagGroup"].ToString();
+            //ViewBag.TagGroups = svc.GetTagGroupsDropdown(strDDLValue);
 
 
             return View();
         }
 
 
-        //[HttpGet]
-        //public ActionResult GetGroups(DataSourceLoadOptions loadOptions)
-        //{
-        //    return Content(JsonConvert.SerializeObject(DataSourceLoader.Load(svc.GetTagGroups(), loadOptions)), "application/json");
-        //}
 
 
+
+        public ActionResult _tankChart()
+        {
+            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+
+            var model = (tankLevelTags
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    TagName = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    HighLevel = x.parameters[0].Value.Select(y => y.HighRange),
+                    LowLevel = x.parameters[0].Value.Select(y => y.LowRange)
+                })
+                .ToList()
+                .Select(y => new GaugeViewModel()
+                {
+                    tagName = y.TagName.First(),
+                    tagValue = y.Reading.First(),
+                    maxValue = y.HighLevel.First(),
+                    minValue = y.LowLevel.First()
+
+                });
+
+            return PartialView("_tankChart", model);
+        }
+
+        public ActionResult _tankGauges()
+        {
+            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+
+            var model = (tankLevelTags
+                .OrderBy(n => n.path)
+                )
+                .Select(x => new
+                {
+                    TagName = x.parameters[0].Value.Select(y => y.Desc),
+                    Reading = x.parameters[0].Value.Select(y => y.Reading),
+                    HighLevel = x.parameters[0].Value.Select(y => y.HighRange),
+                    LowLevel = x.parameters[0].Value.Select(y => y.LowRange)
+                })
+                .ToList()
+                .Select(y => new GaugeViewModel()
+                {
+                    tagName = y.TagName.First(),
+                    tagValue = y.Reading.First(),
+                    maxValue = y.HighLevel.First(),
+                    minValue = y.LowLevel.First()
+
+                });
+
+            return PartialView("_tankChart", model);
+        }
     }
 }

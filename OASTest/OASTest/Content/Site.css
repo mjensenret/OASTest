@@ -1,3 +1,10 @@
 ﻿body {
   padding-top: 50px;
 }
+.flex-container {
+    display: flex;
+    /*background-color: red;*/
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}

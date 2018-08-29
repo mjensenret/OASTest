@@ -1,9 +1,47 @@
-﻿@model IEnumerable<OASTest.ViewModels.TagGroups>
+﻿@model IEnumerable<OASTest.ViewModels.GaugeViewModel>
 @{
     ViewBag.Title = "TankLevels";
 }
 
 @using (Html.BeginForm("TankLevels"))
 {
-    @Html.DropDownList("TagGroup", (IEnumerable<SelectListItem>)ViewBag.TagGroups, new { onchange = "this.form.submit();" })
+    @*<div id="gaugeContainer">
+            @(Html.DevExtreme().CircularGauge()
+                .ID("tank-201")
+                .Scale(s => s
+                    .StartValue(0)
+                    .EndValue(100000)
+                    .TickInterval(1000)
+                    )
+                .Value(Model.Select(y => y.tagValue).First())
+
+        </div>*@
+    <div class="flex-container">
+        @foreach (var tank in Model)
+        {
+            <div>
+                @(Html.DevExtreme().CircularGauge()
+                    .ID(@tank.tagName)
+                    .Scale(s => s
+                        .StartValue(@tank.minValue)
+                        .EndValue(@tank.maxValue)
+                        )
+                    .RangeContainer(c => c
+                        .Offset(10)
+                        .Ranges(r =>
+                        {
+                            r.Add().StartValue(@tank.minValue).EndValue((@tank.minValue + 5000)).Color("#FF0000");
+                            r.Add().StartValue((@tank.maxValue - 5000)).EndValue(@tank.maxValue).Color("#FF0000");
+                        })
+                        .Width(25)
+                        )
+                    .Value(@tank.tagValue)
+                    .Title(@tank.tagName)
+                    .ValueIndicator(v => v.Color("#FF1111"))
+                )
+            </div>
+        }
+    </div>
 }
+
+@Html.Action("_tankChart")

@@ -1,0 +1,18 @@
+@Html.DevExpress().Chart(settings => {
+    settings.Name = "TankChart";
+    settings.Series.Template(t =>
+    {
+        t.Views().FullStackedBarSeriesView(v =>
+        {
+            v.SeriesLabel(l =>
+            {
+                l.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+
+            });
+        });
+    });
+
+    settings.Series.Add(s => {
+        s.SetDataMembers("tagName", "tagValue");
+    });
+}).Bind(Model).GetHtml()

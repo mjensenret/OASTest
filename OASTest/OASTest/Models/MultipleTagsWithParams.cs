@@ -24,5 +24,7 @@ namespace OASTest.Models
         public float Reading {get;set;}
         public string Desc { get; set; }
         public string Units { get; set;}
+        public int HighRange { get; set; }
+        public int LowRange { get; set; }
     }
 }
