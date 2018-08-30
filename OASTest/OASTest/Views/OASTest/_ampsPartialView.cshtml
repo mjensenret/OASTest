@@ -1,53 +1,58 @@
 ﻿@model IEnumerable<OASTest.ViewModels.GaugeViewModel>
 
 <div class="flex-container">
+
+
     @foreach (var amp in Model)
     {
-
-        <div class="gauges col-lg-2">
-            @(Html.DevExtreme().CircularGauge()
-                .ID(@amp.tagName)
-                .Size(si => si
-                    .Height(200)
-                //    .Width(200)
+        <div class="gaugeContainer">
+            <div class="gauge">
+                @(Html.DevExtreme().CircularGauge()
+                    .ID(@amp.tagName)
+                    .Size(si => si
+                        .Height(150)
+                    //    .Width(200)
                     )
-                .Scale(s => s
-                    .StartValue(@amp.minValue)
-                    .EndValue(@amp.maxValue)
+                    .Scale(s => s
+                        .StartValue(@amp.minValue)
+                        .EndValue(@amp.maxValue)
                     )
-                .RangeContainer(c => c
-                    .Offset(10)
-                    .Ranges(r =>
-                    {
-                        //r.Add().StartValue(@amp.minValue).EndValue((@amp.minValue + 5000)).Color("#FF0000");
-                        //r.Add().StartValue((@amp.maxValue - 5000)).EndValue(@amp.maxValue).Color("#FF0000");
-                    })
-                    .Width(15)
-                    )
-                .Value(@amp.tagValue)
-                .Title(t => t
-                    .Text(@amp.tagName)
-                    .Font(f => f
-                        .Size(14)
+                    .RangeContainer(c => c
+                        .Offset(10)
+                        .Ranges(r =>
+                        {
+                            //r.Add().StartValue(@amp.minValue).EndValue((@amp.minValue + 5000)).Color("#FF0000");
+                            //r.Add().StartValue((@amp.maxValue - 5000)).EndValue(@amp.maxValue).Color("#FF0000");
+                        })
+                        .Width(10)
+                        )
+                    .Value(@amp.tagValue)
+                    .Title(t => t
+                        .Text(@amp.tagName)
+                            .Font(f => f
+                            .Size(14)
                         .Weight(600)
                         )
                     )
-                .ValueIndicator(v => v
-                    .Color("#FF1111")
-                    .SpindleSize(20)
-                    .SpindleGapSize(0)
-                    .Type(GaugeIndicatorType.TriangleNeedle)
-                    .Width(10)
+                    .ValueIndicator(v => v
+                        .Color("#FF1111")
+                        .SpindleSize(10)
+                        .SpindleGapSize(0)
+                        .Type(GaugeIndicatorType.TriangleNeedle)
+                        .Width(5)
                     )
-                .Tooltip(tt => tt.Enabled(true))
-            )
-            @*@Html.Action("ampTrend", new { @amp.tagPath }) @amp.tagName*@
-            <div class="ampTrendGraph" style="width:400px;">
-                @Html.Action("ampTrend", new { @amp.tagPath }) @amp.tagName
+                    .Tooltip(tt => tt
+                        .Enabled(true)
+
+                        )
+                    )
+                </div>
+                <div class="ampTrendGraph">
+                        @Html.Action("ampTrend", new { @amp.tagPath }) @amp.tagName
+                </div>
+
+
             </div>
-        </div>
 
-
-
-    }
+            }
 </div>

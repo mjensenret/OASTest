@@ -15,12 +15,14 @@ using System.Web;
 using System.Web.Mvc;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
+using OASTest.Models;
 
 namespace OASTest.Controllers
 {
     public class OASTestController : Controller
     {
         OASRestService svc = new OASRestService();
+        
 
 
         // GET: OASTest
@@ -251,6 +253,10 @@ namespace OASTest.Controllers
         public void ampTrend(string tagPath)
         {
             var name = svc.GetSpecificTagValue(tagPath);
+
+
+
+            
 
 
 

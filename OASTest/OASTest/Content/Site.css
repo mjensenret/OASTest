@@ -9,16 +9,40 @@
     justify-content: center;
 }
 
+.gauge {
+    background-color: aquamarine;
+    float: left;
+}
 
 .ampTrendGraph {
     background-color: red;
+    float: left;
 }
 
-#tankImage {
-    background-color: red;
-    position:relative;
+.gaugeContainer:after {
+    content: "";
+    background-color:blueviolet;
+    display: table;
+    clear: both;
 }
-#tankImage > div {
+
+
+.tankBG {
+    /*display: table;
+    clear: both;*/
+    float:left;
+}
+
+.tankGauge {
     position:absolute;
-    background-color: green;
+    margin: 0 auto;
+    border:solid;
 }
+
+.tankContainer:after {
+    border: solid;
+    content: "";
+    display: table;
+    clear:both;
+}
+
