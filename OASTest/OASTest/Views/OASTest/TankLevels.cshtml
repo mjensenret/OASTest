@@ -6,49 +6,130 @@
 @using (Html.BeginForm("TankLevels"))
 {
     <div class="flex-container">
+
         @foreach (var tank in Model)
         {
+
             <div class="tankContainer">
+                <div class="tankGauge" id="@("testId " + @tank.tagPath)">
+                    @(Html.DevExtreme().CircularGauge()
+                            .ID(@tank.tagName)
+                            .Tooltip(tt => tt
+                                .Enabled(true)
+                                .ZIndex(15)
+                                .Format(f => f
+                                    .Type(Format.FixedPoint)
+                                    .Precision(2)
+                                )
+                            )
+                            .Scale(s => s
+                                .StartValue(@tank.minValue)
+                                .EndValue(@tank.maxValue)
+                                .Label(l => l
+                                    .Font(f => f
+                                        .Color("#000000")
+                                        .Size(8)
+                                        )
+                                )
+                            )
+                            .Size(si => si
+                                .Width(190)
+                                .Height(190)
+                            )
+                            .RangeContainer(c => c
+                                .Offset(0)
+                                .Ranges(r =>
+                                {
+                                    r.Add().StartValue(@tank.minValue).EndValue((@tank.minValue + 5000)).Color("#FF0000");
+                                    r.Add().StartValue((@tank.maxValue - 5000)).EndValue(@tank.maxValue).Color("#FF0000");
+                                })
+                                .Width(10)
+                                )
+                            .Value(@tank.tagValue)
+                            .Title(ti => ti
+                                .Text(@tank.tagName)
+                                .Font(f => f
+                                    .Size(16)
+                                    .Weight(800)
+                                )
+                            )
+                            .ValueIndicator(v => v
+                                .Color("#FF1111")
+                                .SpindleSize(10)
+                                .SpindleGapSize(0)
+                                .Type(GaugeIndicatorType.TriangleNeedle)
+                                .Width(8)
+                                )
 
-
-                    <div class="tankGauge">
-                        @(Html.DevExtreme().CircularGauge()
-                    .ID(@tank.tagName)
-                    .Scale(s => s
-                        .StartValue(@tank.minValue)
-                        .EndValue(@tank.maxValue)
-                        )
-                    .RangeContainer(c => c
-                        .Offset(0)
-                        .Ranges(r =>
-                        {
-                            r.Add().StartValue(@tank.minValue).EndValue((@tank.minValue + 5000)).Color("#FF0000");
-                            r.Add().StartValue((@tank.maxValue - 5000)).EndValue(@tank.maxValue).Color("#FF0000");
-                        })
-                        .Width(15)
-                        )
-                    .Value(@tank.tagValue)
-                    .Title(@tank.tagName)
-                    .ValueIndicator(v => v
-                        .Color("#FF1111")
-                        .SpindleSize(20)
-                        .SpindleGapSize(0)
-                        .Type(GaugeIndicatorType.TriangleNeedle)
-                        .Width(10)
-                        )
-                        )
-                    </div>
-                <div class="tankBG">
-                    <img src="~/Content/img/Tank3 Gray.png" />
-
+                    )
                 </div>
-
+                <div class="levelValue"><b>BBLs: </b>@tank.tagValue.ToString("#,##0.00")</div>
             </div>
-
         }
+
     </div>
 }
 
-<div id="tank202Value" opc-tag-txt='{"tag":"Trenton.Tank202BBLs.Value"}'></div>
+<canvas id="canvasRadial1"></canvas>
+<script>
 
-@Html.Action("_tankChart")
+
+    //debugger;
+    //var radial1;
+    //$(document).ready(function () {
+    //    init();
+    //})
+
+    //function init() {
+    //    //Define some secctions
+    //    var sections = [steelseries.Section(0, 25, 'rgba(0,0,220,.3)'),
+    //        steelseries.Section(25, 50, 'rgba(0,220,0, 0.3)'),
+    //        steelseries.Section(50, 75, 'rgba(220,220, 0, 0.3)')],
+
+    //        //Define one area
+    //        areas = [steelseries.Section(75, 100, 'rgba(220,0,0, 0.3)')],
+
+    //        //Define value gradient for bargraph
+    //        valGrad = new steelseries.gradientWrapper(0,
+    //                                                    100,
+    //                                                    [0, 0.33, 0.66, 0.85, 1],
+    //                                                    [new steelseries.rgbaColor(0, 0, 200, 1),
+    //                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+    //                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+    //                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+    //                                                      new steelseries.rgbaColor(200, 0, 0, 1)]);
+
+    //    //Initialize gauge
+
+    //    radial1 = new steelseries.Radial('canvasRadial1', {
+    //        gaugeType: steelseries.GaugeType.TYPE4,
+    //        size: 201,
+    //        minValue: 15000,
+    //        maxValue: 98000,
+    //        section: sections,
+    //        area: areas,
+    //        titleString: 'Gauge Title',
+    //        unitString: 'BBLs',
+    //        threshold: 90000,
+    //        lcdVisible: true
+
+    //    });
+
+    //    //setting random update
+    //    //setInterval(function () { setRandomValue(radial1, 100); }, 4200);
+
+    //    // Set up a script interval to check and update the value every 1000ms.
+    //    setInterval(function () {
+    //        var sv = OPC.get_value("Trenton.Tank201BBLs.Value");
+    //        //var mv = OPC.get_value("Trenton.Tank201BBLs.HighRange");
+    //        var mv = OPC.tags;
+    //        radial1.setValueAnimated(parseFloat(sv));
+    //    }, 1000);
+    //}
+
+    //function setRandomValue(gauge, range) {
+    //    gauge.setValueAnimated(Math.random() * range);
+    //}
+
+
+</script>

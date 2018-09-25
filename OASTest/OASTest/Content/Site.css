@@ -28,21 +28,127 @@
 
 
 .tankBG {
-    /*display: table;
-    clear: both;*/
-    float:left;
+    
 }
+
+
 
 .tankGauge {
-    position:absolute;
-    margin: 0 auto;
-    border:solid;
+    position: relative;
+    transform: translate(0%,12%);
+    z-index:1;
 }
 
-.tankContainer:after {
-    border: solid;
-    content: "";
-    display: table;
+.levelValue {
+    /*position: relative;*/
+    transform: translate(2%,130%);
+}
+
+#valueLabel{
+    z-index: 10;
+}
+
+.tankContainer {
+    content:"";
+    height:260px;
+    width:260px;
+    display:table;
     clear:both;
+    background-image: url("../Content/img/Tank3_Gray_250x259.png");
+    background-repeat:no-repeat;
+}
+
+#panelBackground {
+    position: relative;
+    width: 640px;
+    height: 300px;
+    background: url("../Content/img/plcPanelBG.png") no-repeat;
+}
+
+#powerButton {
+    width:52px;
+    height:52px;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    /*text-indent: -99999px;*/
+}
+
+#powerButton:hover {
+    cursor:pointer;
+}
+
+#resetButton {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    top: 77px;
+    left: 25px;
+}
+
+#resetButton:hover {
+    cursor: pointer;
+}
+
+#pump {
+    position: absolute;
+    width:124px;
+    height: 89px;
+    top: 25px;
+    left: 450px;
+}
+
+#pumpStatus {
+    color: white;
+    position: absolute;
+    width: 125px;
+    top: 125px;
+    left: 460px;
+}
+
+#pumpTimerOn {
+    color: white;
+    position: absolute;
+    width: 125px;
+    top: 150px;
+    left: 460px;
+}
+
+#pumpTimerOff {
+    color: white;
+    position: absolute;
+    width: 125px;
+    top: 150px;
+    left: 460px;
+}
+#pressureGaugeContainer {
+    position: absolute;
+    width: 175px;
+    height: 175px;
+    top: 25px;
+    left: 225px;
+}
+
+#delayTimers {
+    color: white;
+    position: absolute;
+    top: 130px;
+    left: 25px;
+    width: 75px;
+}
+#timerOn {
+    color: black;
+}
+
+#timerOff {
+    color: black;
+}
+
+#pumpTimerOn {
+    display: none;
+}
+
+#pumpTimerOff {
+    display: none;
 }
 

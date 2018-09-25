@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>ClickPLC Demo Page</h2>
+
+
+<div id="panelBackground">
+    <img id="powerButton"
+         opc-tag-src='{"type":"group",
+        "group":[
+          {"tag":"TestPLC.LogicalMainSwitch.Value","config":"../Content/img/btnPower_Red.png"}
+        ],
+        "all_f":"../Content/img/btnPower_Off.png",
+        "bad_q":"../Content/img/btnPower_Disabled.png"
+      }'
+         opc-tag-set='{"tag":"TestPLC.LogicalMainSwitch.Value",
+            "config":{"evt":"click","set":"toggle"}
+         }' />
+    @*<img id="resetButton"
+         opc-tag-src='{"type":"group",
+         "group":[
+            {"tag":"TestPLC.TimerReset.Value","config":"../Content/img/btnReset.png"}
+         ],
+         "all_f":"../Content/img/btnReset.png",
+         "bad_q":"../Content/img/btnReset.png"
+         }'
+         opc-tag-set='{"tag":"TestPLC.TimerReset.Value",
+            "config":{"evt":"click","set":"toggle"}
+         }'
+    />*@
+    <div id="delayTimers">
+        <div id="startDelay">
+            Start Delay: <input id="timerOn"
+                                opc-tag-val='{"tag":"TestPLC.TimerOnSetpoint.Value", "config":{"formats":{"bad_q":"?????","value":"TestPLC.TimerOnSetpoint.Value"}}}'
+                                opc-tag-set='{
+                                "tag": "TestPLC.TimerOnSetpoint.Value",
+                                "config": {
+                                    "evt": "change",
+                                    "set": "value",
+                                    "set_confirm": true
+                                }
+                            }'
+                         />
+        </div>
+        <div id="endDelay">
+            Stop Delay: <input id='timerOff' type='text'
+                                opc-tag-val='{"tag":"TestPLC.TimerOffSetpoint.Value", "config":{"formats":{"bad_q":"?????","value":"TestPLC.TimerOffSetpoint.Value"}}}'
+                                opc-tag-set='{
+                                "tag": "TestPLC.TimerOffSetpoint.Value",
+                                "config": {
+                                    "evt": "change",
+                                    "set": "value",
+                                    "set_confirm": true,
+                                    "set_confirm_msg": "Are you sure?",
+                                    "set_confirm_title":"Change Value"
+                                }
+                            }' />
+        </div>
+    </div>
+    <img id="pump"
+         opc-tag-src='{"type":"group",
+         "group":[
+            {"tag":"TestPLC.Light.Value","config":"../Content/img/pmpGreenFront.png"}
+         ],
+         "all_f":"../Content/img/pmpRedFront.png",
+         "bad_q":"../Content/img/pmpYellowFront.png"
+         }'
+    />
+    <div id="pumpStatus">
+        <label id="pumpStat" opc-tag-txt='{"tag":"TestPLC.PumpStatus.Value", "config": {}}'></label>
+    </div>
+    <div id="pumpTimerOn">
+        Pump will start in: <label id="pumpStartTimer" opc-tag-txt='{"tag":"TestPLC.TimerOnCountdown.Value"}'></label>
+    </div>
+    <div id="pumpTimerOff">
+        Pump will stop in: <label id="pumpStopTimer" opc-tag-txt='{"tag":"TestPLC.TimerOffCountdown.Value"}'></label>
+    </div>
+    <div id="pressureGaugeContainer">
+        <canvas id="pressureGauge">No canvas in your browser...Sorry</canvas>
+    </div>
+
+    
+</div>
+
+<script>
+    //debugger;
+    $(document).ready(function () {
+
+        init();
+
+    });
+
+    function init() {
+
+        //Define some sections
+        var sections = [steelseries.Section(0, 25, 'rgba(0,0,220,.3)'),
+            steelseries.Section(25, 50, 'rgba(0,220,0, 0.3)'),
+            steelseries.Section(50, 75, 'rgba(220,220, 0, 0.3)')],
+
+            //Define one area
+            areas = [steelseries.Section(75, 100, 'rgba(220,0,0, 0.3)')],
+
+            //Define value gradient for bargraph
+            valGrad = new steelseries.gradientWrapper(0,
+                                                        100,
+                                                        [0, 0.33, 0.66, 0.85, 1],
+                                                        [new steelseries.rgbaColor(0, 0, 200, 1),
+                                                          new steelseries.rgbaColor(0, 200, 0, 1),
+                                                          new steelseries.rgbaColor(200, 200, 0, 1),
+                                                          new steelseries.rgbaColor(200, 0, 0, 1),
+                                                          new steelseries.rgbaColor(200, 0, 0, 1)]);
+    
+
+        var radialGauge = new steelseries.Radial('pressureGauge', {
+            gaugeType: steelseries.GaugeType.TYPE1,
+            size: 150,
+            section: sections,
+            area: areas,
+            titleString: 'Line Pressure',
+            unitString: 'Lbs',
+            threshold: 75,
+            frameDesign: steelseries.FrameDesign.CHROME,
+            backgroundColor: steelseries.BackgroundColor.BLACK,
+            lcdVisible: true
+
+        })
+
+        setInterval(function () {
+            var sv = OPC.get_value("TestPLC.LinePressure.Value");
+            radialGauge.setValue(parseFloat(sv));
+            var pumpStatus = OPC.get_value("TestPLC.PumpStatus.Value");
+            if (pumpStatus === "Starting") {
+                showPumpTimer("pumpTimerOn");
+                window.console.log("Starting - show starting counter");
+            } else if (pumpStatus === "Stopping") {
+                showPumpTimer("pumpTimerOff");
+                window.console.log("Stopping - show stopping counter");
+            } else {
+                showPumpTimer("hideBothTimers");
+                window.console.log("everything else");
+            }
+
+        }, 1000);
+
+    }
+
+    function showPumpTimer(status) {
+        if (status === "pumpTimerOn") {
+            document.getElementById("pumpTimerOn").style.display = "block";
+            window.console.log("show on timer div");
+        } else if (status === "pumpTimerOff") {
+            document.getElementById("pumpTimerOff").style.display = "block";
+            window.console.log("show off timer div");
+        } else {
+            document.getElementById("pumpTimerOn").style.display = "none";
+            document.getElementById("pumpTimerOff").style.display = "none";
+            window.console.log("hide both divs");
+        }
+            
+        //var x = document.getElementById(elementId);
+        //if (x.style.display === "none") {
+        //    x.style.display = "block";
+        //} else {
+        //    x.style.display = "none";
+        //}
+    }
+
+
+
+</script>
+
+

@@ -28,9 +28,77 @@
     <script type="text/javascript">
         OPC_config =
             {
-                token: 'ed4dd22f-18d2-4103-bfe9-af586d5f4ad4',
-                serverURL: 'http://ops-dev.savageservices.com:58725'
+                token: '2d1288cf-5ac3-4851-b2bd-9c17e263dea5',
+                serverURL: 'http://fieldvision.savageservices.com:58725',
+                debug: true,
+                watch_tags: [
+                    "Trenton.Tank201BBLs.Value",
+                    "Trenton.Tank202BBLs.Value",
+                    "Trenton.Tank203BBLs.Value",
+                    "Trenton.Tank204BBLs.Value",
+                    "Trenton.Tank205BBLs.Value",
+                    "TestPLC.LogicalMainSwitch.Value",
+                    "TestPLC.MainSwitch.Value",
+                    "TestPLC.TimerOnSetpoint.Value",
+                    "TestPLC.TimerOffSetpoint.Value",
+                    "TestPLC.TimerReset.Value",
+                    "TestPLC.TimerStatus.Value",
+                    "TestPLC.TimerValue.Value",
+                    "TestPLC.LinePressure.Value",
+                    "TestPLC.PumpStatus.Value",
+                    "TestPLC.TimerOnCountdown.Value",
+                    "TestPLC.TimerOffCountdown.Value"
+                ],
+                refresh_callback: update_data
+
             };
+
+        $(document).ready(function () {
+            //debugger;
+            window.console.log("token: " + OPC.token);
+            OPC.authenticate("OASWeb", "S4v4g3*18");
+            if (OPC.token != OPC_config.token) {
+                // the authentication token has been updated
+                // you can now use the token for all subsequent pages within a session
+                OPC_config.token = OPC.token;
+            };
+
+            $("#btnPowerOn").click(function () {
+                OPC.set_value("TestPLC.LogicalMainSwitch.Value", "toggle");
+            });
+            $("#btnTimerReset").click(function () {
+                OPC.set_value("TestPLC.TimerReset.Value", "toggle");
+            })
+
+        });
+
+
+        //debugger;
+        function update_data(data) {
+            var clickMainSwitch = OPC.get_value("TestPLC.MainSwitch.Value");
+            clickMainSwitch = (clickMainSwitch == "True") ? "On" : "Off";
+            var clickLogSwitch = OPC.get_value("TestPLC.LogicalMainSwitch.Value");
+            clickLogSwitch = (clickLogSwitch == "True") ? "On" : "Off";
+            var clickTimerSetpoint = OPC.get_value("TestPLC.TimerOnSetpoint.Value");
+            var clickTimerReset = OPC.get_value("TestPLC.TimerReset.Value");
+            var clickTimerStatus = OPC.get_value("TestPLC.TimerStatus.Value");
+            var clickTimerValue = OPC.get_value("TestPLC.TimerValue.Value");
+            var clickLinePressure = OPC.get_value("TestPLC.LinePressure.Value");
+
+            $("#mainButton").html(clickMainSwitch);
+            $("#logicalButton").html(clickLogSwitch);
+            $("#timerOnSetpoint").html(clickTimerSetpoint);
+            $("#timerReset").html(clickTimerReset);
+            $("#timerStatus").html(clickTimerStatus);
+            $("#timerValue").html(clickTimerValue);
+            $("#btnPowerOn").html("System: " + clickLogSwitch);
+            $("#btnTimerReset").html("Reset Timer");
+            //var tankHigh = tags.HighRange;
+
+            //var tankLevel = tags.Trenton.Tank201BBLs.Value.val;
+            //var tankHighLevel = tags.Trenton.Tank201BBLs.props.Value.HighLevel;
+        }
+
     </script>
 </head>
 
