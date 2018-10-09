@@ -65,71 +65,99 @@
                 </div>
                 <div class="levelValue"><b>BBLs: </b>@tank.tagValue.ToString("#,##0.00")</div>
             </div>
+
         }
 
     </div>
 }
 
-<canvas id="canvasRadial1"></canvas>
-<script>
+<div class="flex-container">
+    <div id="acculoadReadings">
+        <div id="accuload">
+            <div id="acculoadDetails">
+                <b>DAPL Transfer</b><br />
+                Status: <label id="lblDaplTransferStatus" opc-tag-txt='{"tag":"TrentonAL.DAPLInjection.Status.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPLInjection.Status.Value"}}}'></label><br />
+                Transaction Number: <label id="lblDaplTransferTrNum" opc-tag-txt='{"tag":"TrentonAL.DAPLInjection.TransactionNumber.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPLInjection.TransactionNumber.Value"}}}'></label><br />
+                GV: <label id="lblDaplTransferGV" opc-tag-txt='{"tag":"TrentonAL.DAPLInjection.GV.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPLInjection.GV.Value"}}}'></label><br />
+                GSV: <label id="lblDaplTransferGSV" opc-tag-txt='{"tag":"TrentonAL.DAPLInjection.GSV.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPLInjection.GSV.Value"}}}'></label><br />
+            </div>
+        </div>
+    </div>
+    <div id="acculoadReadings">
+        <div id="accuload">
+            <div id="acculoadDetails">
+                <b>DAPL Connection</b><br />
+                Status:
+                <label id="lblDaplConnectionStatus" opc-tag-txt='{"tag":"TrentonAL.DAPL Connection.Status.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPL Connection.Status.Value"}}}'></label><br />
+                Transaction Number: <label id="lblDaplConnectionTrNum" opc-tag-txt='{"tag":"TrentonAL.DAPL Connection.TransactionNumber.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPL ConnectionTransactionNumber.Value"}}}'></label><br />
+                GV: <label id="lblDaplConnectionGV" opc-tag-txt='{"tag":"TrentonAL.DAPL Connection.GV.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPL Connection.GV.Value"}}}'></label><br />
+                GSV: <label id="lblDaplConnectionGSV" opc-tag-txt='{"tag":"TrentonAL.DAPL Connection.GSV.Value", "config":{"formats":{"bad_q":"?????","value":"TrentonAL.DAPL Connection.GSV.Value"}}}'></label><br />
+            </div>
+        </div>
+    </div>
+</div>
 
 
-    //debugger;
-    //var radial1;
-    //$(document).ready(function () {
-    //    init();
-    //})
-
-    //function init() {
-    //    //Define some secctions
-    //    var sections = [steelseries.Section(0, 25, 'rgba(0,0,220,.3)'),
-    //        steelseries.Section(25, 50, 'rgba(0,220,0, 0.3)'),
-    //        steelseries.Section(50, 75, 'rgba(220,220, 0, 0.3)')],
-
-    //        //Define one area
-    //        areas = [steelseries.Section(75, 100, 'rgba(220,0,0, 0.3)')],
-
-    //        //Define value gradient for bargraph
-    //        valGrad = new steelseries.gradientWrapper(0,
-    //                                                    100,
-    //                                                    [0, 0.33, 0.66, 0.85, 1],
-    //                                                    [new steelseries.rgbaColor(0, 0, 200, 1),
-    //                                                      new steelseries.rgbaColor(0, 200, 0, 1),
-    //                                                      new steelseries.rgbaColor(200, 200, 0, 1),
-    //                                                      new steelseries.rgbaColor(200, 0, 0, 1),
-    //                                                      new steelseries.rgbaColor(200, 0, 0, 1)]);
-
-    //    //Initialize gauge
-
-    //    radial1 = new steelseries.Radial('canvasRadial1', {
-    //        gaugeType: steelseries.GaugeType.TYPE4,
-    //        size: 201,
-    //        minValue: 15000,
-    //        maxValue: 98000,
-    //        section: sections,
-    //        area: areas,
-    //        titleString: 'Gauge Title',
-    //        unitString: 'BBLs',
-    //        threshold: 90000,
-    //        lcdVisible: true
-
-    //    });
-
-    //    //setting random update
-    //    //setInterval(function () { setRandomValue(radial1, 100); }, 4200);
-
-    //    // Set up a script interval to check and update the value every 1000ms.
-    //    setInterval(function () {
-    //        var sv = OPC.get_value("Trenton.Tank201BBLs.Value");
-    //        //var mv = OPC.get_value("Trenton.Tank201BBLs.HighRange");
-    //        var mv = OPC.tags;
-    //        radial1.setValueAnimated(parseFloat(sv));
-    //    }, 1000);
-    //}
-
-    //function setRandomValue(gauge, range) {
-    //    gauge.setValueAnimated(Math.random() * range);
-    //}
+    <canvas id="canvasRadial1"></canvas>
+    <script>
 
 
-</script>
+        //debugger;
+        //var radial1;
+        //$(document).ready(function () {
+        //    init();
+        //})
+
+        //function init() {
+        //    //Define some secctions
+        //    var sections = [steelseries.Section(0, 25, 'rgba(0,0,220,.3)'),
+        //        steelseries.Section(25, 50, 'rgba(0,220,0, 0.3)'),
+        //        steelseries.Section(50, 75, 'rgba(220,220, 0, 0.3)')],
+
+        //        //Define one area
+        //        areas = [steelseries.Section(75, 100, 'rgba(220,0,0, 0.3)')],
+
+        //        //Define value gradient for bargraph
+        //        valGrad = new steelseries.gradientWrapper(0,
+        //                                                    100,
+        //                                                    [0, 0.33, 0.66, 0.85, 1],
+        //                                                    [new steelseries.rgbaColor(0, 0, 200, 1),
+        //                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+        //                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+        //                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+        //                                                      new steelseries.rgbaColor(200, 0, 0, 1)]);
+
+        //    //Initialize gauge
+
+        //    radial1 = new steelseries.Radial('canvasRadial1', {
+        //        gaugeType: steelseries.GaugeType.TYPE4,
+        //        size: 201,
+        //        minValue: 15000,
+        //        maxValue: 98000,
+        //        section: sections,
+        //        area: areas,
+        //        titleString: 'Gauge Title',
+        //        unitString: 'BBLs',
+        //        threshold: 90000,
+        //        lcdVisible: true
+
+        //    });
+
+        //    //setting random update
+        //    //setInterval(function () { setRandomValue(radial1, 100); }, 4200);
+
+        //    // Set up a script interval to check and update the value every 1000ms.
+        //    setInterval(function () {
+        //        var sv = OPC.get_value("Trenton.Tank201BBLs.Value");
+        //        //var mv = OPC.get_value("Trenton.Tank201BBLs.HighRange");
+        //        var mv = OPC.tags;
+        //        radial1.setValueAnimated(parseFloat(sv));
+        //    }, 1000);
+        //}
+
+        //function setRandomValue(gauge, range) {
+        //    gauge.setValueAnimated(Math.random() * range);
+        //}
+
+
+    </script>

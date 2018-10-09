@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AcculoadConsoleApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ALTCPHost" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">172.18.106.83</Value>
+    </Setting>
+    <Setting Name="ALTCPPort" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">7734</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

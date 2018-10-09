@@ -29,6 +29,7 @@
         OPC_config =
             {
                 token: '2d1288cf-5ac3-4851-b2bd-9c17e263dea5',
+                //TEST SERVER CONFIGURATION
                 serverURL: 'http://fieldvision.savageservices.com:58725',
                 debug: true,
                 watch_tags: [
@@ -37,6 +38,7 @@
                     "Trenton.Tank203BBLs.Value",
                     "Trenton.Tank204BBLs.Value",
                     "Trenton.Tank205BBLs.Value",
+                    "TrentonAL.DAPL Connection.Status.Value",
                     "TestPLC.LogicalMainSwitch.Value",
                     "TestPLC.MainSwitch.Value",
                     "TestPLC.TimerOnSetpoint.Value",
@@ -50,6 +52,25 @@
                     "TestPLC.TimerOffCountdown.Value"
                 ],
                 refresh_callback: update_data
+                //THEHUB TEST
+                //serverUrl: 'http://thehub.savageservices.com:58725',
+                //debug: true,
+                //watch_tags: [
+                //    "AccuLoad.DAPLConnection.GSV.Value",
+                //    "AccuLoad.DAPLConnection.GV.Value",
+                //    "AccuLoad.DAPLConnection.Status.Value",
+                //    "AccuLoad.DAPLConnection.TransactionNumber.Value",
+                //    "AccuLoad.DAPLTransfer.GSV.Value",
+                //    "AccuLoad.DAPLTransfer.GV.Value",
+                //    "AccuLoad.DAPLTransfer.Status.Value",
+                //    "AccuLoad.DAPLTransfer.TransactionNumber.Value",
+                //    "Volume.Tank201BBLs.Value",
+                //    "Volume.Tank202BBLs.Value",
+                //    "Volume.Tank203BBLs.Value",
+                //    "Volume.Tank204BBLs.Value",
+                //    "Volume.Tank205BBLs.Value"
+                //],
+                //refresh_callback: update_data
 
             };
 
@@ -63,36 +84,36 @@
                 OPC_config.token = OPC.token;
             };
 
-            $("#btnPowerOn").click(function () {
-                OPC.set_value("TestPLC.LogicalMainSwitch.Value", "toggle");
-            });
-            $("#btnTimerReset").click(function () {
-                OPC.set_value("TestPLC.TimerReset.Value", "toggle");
-            })
+            //$("#btnPowerOn").click(function () {
+            //    OPC.set_value("TestPLC.LogicalMainSwitch.Value", "toggle");
+            //});
+            //$("#btnTimerReset").click(function () {
+            //    OPC.set_value("TestPLC.TimerReset.Value", "toggle");
+            //})
 
         });
 
 
         //debugger;
         function update_data(data) {
-            var clickMainSwitch = OPC.get_value("TestPLC.MainSwitch.Value");
-            clickMainSwitch = (clickMainSwitch == "True") ? "On" : "Off";
-            var clickLogSwitch = OPC.get_value("TestPLC.LogicalMainSwitch.Value");
-            clickLogSwitch = (clickLogSwitch == "True") ? "On" : "Off";
-            var clickTimerSetpoint = OPC.get_value("TestPLC.TimerOnSetpoint.Value");
-            var clickTimerReset = OPC.get_value("TestPLC.TimerReset.Value");
-            var clickTimerStatus = OPC.get_value("TestPLC.TimerStatus.Value");
-            var clickTimerValue = OPC.get_value("TestPLC.TimerValue.Value");
-            var clickLinePressure = OPC.get_value("TestPLC.LinePressure.Value");
+            //var clickMainSwitch = OPC.get_value("TestPLC.MainSwitch.Value");
+            //clickMainSwitch = (clickMainSwitch == "True") ? "On" : "Off";
+            //var clickLogSwitch = OPC.get_value("TestPLC.LogicalMainSwitch.Value");
+            //clickLogSwitch = (clickLogSwitch == "True") ? "On" : "Off";
+            //var clickTimerSetpoint = OPC.get_value("TestPLC.TimerOnSetpoint.Value");
+            //var clickTimerReset = OPC.get_value("TestPLC.TimerReset.Value");
+            //var clickTimerStatus = OPC.get_value("TestPLC.TimerStatus.Value");
+            //var clickTimerValue = OPC.get_value("TestPLC.TimerValue.Value");
+            //var clickLinePressure = OPC.get_value("TestPLC.LinePressure.Value");
 
-            $("#mainButton").html(clickMainSwitch);
-            $("#logicalButton").html(clickLogSwitch);
-            $("#timerOnSetpoint").html(clickTimerSetpoint);
-            $("#timerReset").html(clickTimerReset);
-            $("#timerStatus").html(clickTimerStatus);
-            $("#timerValue").html(clickTimerValue);
-            $("#btnPowerOn").html("System: " + clickLogSwitch);
-            $("#btnTimerReset").html("Reset Timer");
+            //$("#mainButton").html(clickMainSwitch);
+            //$("#logicalButton").html(clickLogSwitch);
+            //$("#timerOnSetpoint").html(clickTimerSetpoint);
+            //$("#timerReset").html(clickTimerReset);
+            //$("#timerStatus").html(clickTimerStatus);
+            //$("#timerValue").html(clickTimerValue);
+            //$("#btnPowerOn").html("System: " + clickLogSwitch);
+            //$("#btnTimerReset").html("Reset Timer");
             //var tankHigh = tags.HighRange;
 
             //var tankLevel = tags.Trenton.Tank201BBLs.Value.val;

@@ -97,10 +97,11 @@ namespace OASTest.Controllers
 
         public async Task<ActionResult> TankLevels()
         {
-            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+            var tankLevelTags = svc.GetMultipleTagValues("Volume");
 
             var model = (tankLevelTags
                 .OrderBy(n => n.path)
+                //.Where(n => n.path.Contains("BBLs"))
                 )
                 .Select(x => new
                 {
@@ -126,7 +127,7 @@ namespace OASTest.Controllers
         [HttpPost]
         public async Task<ActionResult> TankLevels(FormCollection form)
         {
-            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+            var tankLevelTags = svc.GetMultipleTagValues("Volume");
 
             //string strDDLValue = form["TagGroup"].ToString();
             //ViewBag.TagGroups = svc.GetTagGroupsDropdown(strDDLValue);
@@ -141,7 +142,7 @@ namespace OASTest.Controllers
 
         public ActionResult _tankChart()
         {
-            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+            var tankLevelTags = svc.GetMultipleTagValues("Volume");
 
             var model = (tankLevelTags
                 .OrderBy(n => n.path)
@@ -168,7 +169,7 @@ namespace OASTest.Controllers
 
         public ActionResult _tankGauges()
         {
-            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
+            var tankLevelTags = svc.GetMultipleTagValues("Volume");
 
             var model = (tankLevelTags
                 .OrderBy(n => n.path)
