@@ -11,7 +11,7 @@ namespace OASTest.Service
 {
     public class OASRestService
     {
-        string baseUrl = "http://thehub.savageservices.com:58725/OASREST/v2/";
+        string baseUrl = "http://fieldvision.savageservices.com:58725/OASREST/v2/";
         string clientId = "";
         string token = "";
 

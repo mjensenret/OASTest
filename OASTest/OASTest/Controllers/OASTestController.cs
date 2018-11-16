@@ -97,11 +97,11 @@ namespace OASTest.Controllers
 
         public async Task<ActionResult> TankLevels()
         {
-            var tankLevelTags = svc.GetMultipleTagValues("Volume");
+            var tankLevelTags = svc.GetMultipleTagValues("Trenton");
 
             var model = (tankLevelTags
                 .OrderBy(n => n.path)
-                //.Where(n => n.path.Contains("BBLs"))
+                .Where(n => n.path.Contains("BBLs"))
                 )
                 .Select(x => new
                 {
