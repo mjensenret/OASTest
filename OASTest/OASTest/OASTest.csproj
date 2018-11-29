@@ -168,9 +168,13 @@
     <Content Include="Content\dx.softblue.compact.css" />
     <Content Include="Content\dx.softblue.css" />
     <Content Include="Content\dx.spa.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\img\AccuLoadBG.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\back_disabled.png" />
+    <Content Include="Content\img\back_enabled.png" />
+    <Content Include="Content\img\back_enabled_hover.png" />
     <Content Include="Content\img\btnPower_Disabled.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -186,6 +190,10 @@
     <Content Include="Content\img\btnReset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\forward_disabled.png" />
+    <Content Include="Content\img\forward_enabled.png" />
+    <Content Include="Content\img\forward_enabled_hover.png" />
     <Content Include="Content\img\plcPanelBG.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -198,6 +206,11 @@
     <Content Include="Content\img\pmpYellowFront.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\img\sort_asc.png" />
+    <Content Include="Content\img\sort_asc_disabled.png" />
+    <Content Include="Content\img\sort_both.png" />
+    <Content Include="Content\img\sort_desc.png" />
+    <Content Include="Content\img\sort_desc_disabled.png" />
     <Content Include="Content\img\Tank3 Blue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -216,7 +229,13 @@
     <Content Include="Content\img\Tank3_Gray_250x259.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\opc-alarm-style.css" />
+    <Content Include="Content\opc-modal.css" />
+    <Content Include="Content\opc-style.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\tanks-style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -263,6 +282,7 @@
     <None Include=".bin\node.cmd" />
     <None Include="OAS.razoredgetech.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\OAS.razoredgetech.com - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Savage Ops Dev Server.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -296,10 +316,14 @@
     <Content Include="Scripts\OAS\datatables\images\sort_both.png" />
     <Content Include="Scripts\OAS\datatables\images\sort_desc.png" />
     <Content Include="Scripts\OAS\datatables\images\sort_desc_disabled.png" />
-    <Content Include="Scripts\OAS\datatables\js\jquery.dataTables.min.js" />
-    <Content Include="Scripts\OAS\flot\jquery.flot.crosshair.min.js" />
-    <Content Include="Scripts\OAS\flot\jquery.flot.min.js" />
-    <Content Include="Scripts\OAS\flot\jquery.flot.time.min.js" />
+    <Content Include="Scripts\OAS\datatables\js\jquery.dataTables-min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot.crosshair-min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot-min.js" />
+    <Content Include="Scripts\OAS\flot\jquery.flot.time-min.js" />
+    <Content Include="Scripts\OAS\jquery.dataTables-min.js" />
+    <Content Include="Scripts\OAS\jquery.flot.crosshair-min.js" />
+    <Content Include="Scripts\OAS\jquery.flot-min.js" />
+    <Content Include="Scripts\OAS\jquery.flot.time-min.js" />
     <Content Include="Scripts\OAS\lib\jquery-1.8.3.min.js" />
     <Content Include="Scripts\OAS\lib\jquery.animate-colors-min.js" />
     <Content Include="Scripts\OAS\lib\jquery.numberformatter-1.2.3.min.js" />

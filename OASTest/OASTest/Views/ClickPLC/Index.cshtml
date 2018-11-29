@@ -85,6 +85,10 @@
 
     
 </div>
+<div id="linePressureChartContainer">
+    <div id="linePressureTrend" style="width:560px;height:300px;"></div>
+</div>
+<div id="linePressureAlarm">e</div>
 
 <script>
     //debugger;
@@ -141,7 +145,6 @@
                 window.console.log("Stopping - show stopping counter");
             } else {
                 showPumpTimer("hideBothTimers");
-                window.console.log("everything else");
             }
 
         }, 1000);
@@ -151,14 +154,11 @@
     function showPumpTimer(status) {
         if (status === "pumpTimerOn") {
             document.getElementById("pumpTimerOn").style.display = "block";
-            window.console.log("show on timer div");
         } else if (status === "pumpTimerOff") {
             document.getElementById("pumpTimerOff").style.display = "block";
-            window.console.log("show off timer div");
         } else {
             document.getElementById("pumpTimerOn").style.display = "none";
             document.getElementById("pumpTimerOff").style.display = "none";
-            window.console.log("hide both divs");
         }
             
         //var x = document.getElementById(elementId);

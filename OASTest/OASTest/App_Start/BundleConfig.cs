@@ -23,6 +23,10 @@ namespace OASTest {
             //OAS Scripts
             scriptBundle
                 .IncludeDirectory("~/Scripts/OAS/", "*.js");
+            //scriptBundle
+            //    .IncludeDirectory("~/Scripts/OAS/flot/", "*.js");
+
+
 
             // Bootstrap
             styleBundle
@@ -32,12 +36,27 @@ namespace OASTest {
             styleBundle
                 .Include("~/Content/Site.css");
 
+            //OAS styles
+            styleBundle
+                .Include("~/Content/jquery.dataTables.css");
+            styleBundle
+                .Include("~/Content/jquery.dataTables_themeroller.css");
+            styleBundle
+                .Include("~/Content/font-awesome.min.css");
+            styleBundle
+                .Include("~/Content/opc-alarm-style.css");
+            styleBundle
+                .Include("~/Content/opc-modal.css");
+            styleBundle
+                .Include("~/Content/opc-style.css");
+
             bundles.Add(scriptBundle);
             bundles.Add(styleBundle);
 
 #if !DEBUG
             BundleTable.EnableOptimizations = true;
 #endif
+
         }
     }
 }

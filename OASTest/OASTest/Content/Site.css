@@ -239,4 +239,19 @@
     background-image: url("../Content/img/AccuLoadBG.png");
     background-repeat:no-repeat;
 }
+#linePressureChartContainer {
+    background-color: black;
+    width:600px;
+    height:350px;
+    border:solid 1px #777;
+    padding:20px;
+    margin-bottom:20px;
+}
+.legendLabel {
+    color: white;
+    background-color: #000;
+}
+#linePressureAlarm {
+    width: 600px;
+}
 

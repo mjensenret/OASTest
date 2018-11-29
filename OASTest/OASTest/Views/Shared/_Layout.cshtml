@@ -30,7 +30,7 @@
             {
                 token: '2d1288cf-5ac3-4851-b2bd-9c17e263dea5',
                 //TEST SERVER CONFIGURATION
-                serverURL: 'http://fieldvision.savageservices.com:58725',
+                serverURL: 'http://ops-dev.savageservices.com:58725',
                 debug: true,
                 watch_tags: [
                     "Trenton.Tank201BBLs.Value",
@@ -51,6 +51,45 @@
                     "TestPLC.TimerOnCountdown.Value",
                     "TestPLC.TimerOffCountdown.Value"
                 ],
+                trend_bindings:[
+                  {
+                      chartid:"linePressureTrend", 
+                      samplerate: 1,
+                      timeframe: 100,
+                      tags:[
+                        {
+                            label: "Line Pressure",
+                            tag: "TestPLC.LinePressure.Value",
+                            color: "#58D3F7",
+                            yaxis: 1,
+                            lines: { fill: true },
+                            points: { show: true }
+
+                        }
+                      ],
+                      retain: 50,
+                      callback:trendCallback
+                  }
+                ],
+                alarm_bindings: [
+                  {
+                      alarmid: "linePressureAlarm",
+                      showHistory: false,
+                      filter: {
+                          alarmtypes: ["Digital", "High", "High High", "Low", "Low Low"]
+
+                      },
+                      columns: [
+                        { name: "AlarmDateTime", text: "Alarm Date/Time", type: "datetime", visible: true, sort: 'desc', width: '200px', searchable: false },
+                        { name: "Active", text: "Active", type: "boolean", visible: true, width: '50px', align: 'center' },
+                        { name: "AlarmValue", text: "Alarm Value", type: "string", visible: true, align: 'right' },
+                        { name: "Text", text: "Text", type: "string", visible: true },
+                        { name: "AlarmType", text: "Alarm Type", type: "string", visible: true },
+                        { name: "Acked", text: "Acked", type: "boolean", visible: true }
+                      ]
+                  }
+                ],
+
                 refresh_callback: update_data
                 //THEHUB TEST
                 //serverUrl: 'http://thehub.savageservices.com:58725',
@@ -118,6 +157,74 @@
 
             //var tankLevel = tags.Trenton.Tank201BBLs.Value.val;
             //var tankHighLevel = tags.Trenton.Tank201BBLs.props.Value.HighLevel;
+        }
+
+        // This configures the options object used by Flot for rendering the grid.
+        // It includes information on how the timestamp is rendered in the x-axis.  
+        // All of these settings are documented at http://www.flotcharts.org/
+
+        grid_options = {
+            series: {
+                shadowSize: 5
+            }, // drawing is faster without shadows
+            lines: {
+                show: true,
+                fill: true
+            },
+            //splines: {
+            //    show: true,
+            //    fill: true,
+            //    tension: 1,
+            //    lineWidth: 1
+            //},
+            grid: {
+                hoverable: true,
+                clickable: true,
+                autoHighlight: false,
+                backgroundColor: { colors: ["#1c1c1c", "#000000"] }
+            },
+            crosshair: { mode: "x" },
+            legend: {
+                //backgroundOpacity: 0.1,
+                //backgroundColor: "#000",
+                //color: "#000"
+                
+
+            },
+            xaxis: {
+                mode: "time",
+                font: {
+                    size: 10,
+                    lineHeight: 10,
+                    family: "sans-serif",
+                    color: "#ffffff"
+                },
+                tickSize: [2, "second"],
+                tickFormatter: function (v, axis) {
+                    var dt = new Date(v);
+                    // display axis label every 30 seconds
+                    if (dt.getSeconds() % 30 == 0) {
+                        // format label to include date and time
+                        return OPC.Util.formatDate(dt, "mm/dd/yyyy hh:MM:ss")
+                    }
+                    return "";
+                }
+            },
+            yaxes: [
+              { position: 'left', min: 0, max: 100 },
+              { position: 'left', min: -1, max: 1 },
+              { position: 'left', min: 0, max: 100 }
+            ]
+        };
+
+        // This is the callback fired by the HTML HMI library, passing in the data points to be rendered
+        function trendCallback(data) {
+            // locate the trend_binding based on the inbound data
+            var tb = OPC.Trend.getTrendBinding(data);
+            // format the data as a Flot series
+            var fd = OPC.Flot.buildTrendData(data);
+            // call $.plot to draw the chart
+            $.plot("#" + tb.chartid, fd, grid_options);
         }
 
     </script>
