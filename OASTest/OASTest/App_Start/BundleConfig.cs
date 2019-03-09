@@ -14,7 +14,7 @@ namespace OASTest {
 
             // jQuery
             scriptBundle
-                .Include("~/Scripts/jquery-3.1.0.js");
+                .Include("~/Scripts/jquery-3.3.1.js");
 
             // Bootstrap
             scriptBundle
@@ -22,7 +22,7 @@ namespace OASTest {
 
             //OAS Scripts
             scriptBundle
-                .IncludeDirectory("~/Scripts/OAS/", "*.js");
+                .IncludeDirectory("~/Scripts/OAS/", "opc-lib-min.js");
             //scriptBundle
             //    .IncludeDirectory("~/Scripts/OAS/flot/", "*.js");
 

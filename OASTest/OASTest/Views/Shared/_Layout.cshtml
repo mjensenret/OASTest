@@ -25,12 +25,13 @@
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.Chart }
     )
+
     <script type="text/javascript">
         OPC_config =
             {
                 token: '2d1288cf-5ac3-4851-b2bd-9c17e263dea5',
                 //TEST SERVER CONFIGURATION
-                serverURL: 'http://ops-dev.savageservices.com:58725',
+                serverURL: 'http://fieldvision.savageservices.com:58725',
                 debug: true,
                 watch_tags: [
                     "Trenton.Tank201BBLs.Value",
@@ -51,32 +52,32 @@
                     "TestPLC.TimerOnCountdown.Value",
                     "TestPLC.TimerOffCountdown.Value"
                 ],
-                trend_bindings:[
-                  {
-                      chartid:"linePressureTrend", 
-                      samplerate: 1,
-                      timeframe: 100,
-                      tags:[
-                        {
-                            label: "Line Pressure",
-                            tag: "TestPLC.LinePressure.Value",
-                            color: "#58D3F7",
-                            yaxis: 1,
-                            lines: { fill: true },
-                            points: { show: true }
+                //trend_bindings: [
+                //  {
+                //      chartid: "linePressureTrend",
+                //      samplerate: 1,
+                //      timeframe: 100,
+                //      tags: [
+                //        {
+                //            label: "Line Pressure",
+                //            tag: "TestPLC.LinePressure.Value",
+                //            color: "#58D3F7",
+                //            yaxis: 1,
+                //            lines: { fill: true },
+                //            points: { show: true }
 
-                        }
-                      ],
-                      retain: 50,
-                      callback:trendCallback
-                  }
-                ],
+                //        }
+                //      ],
+                //      retain: 50,
+                //      callback: trendCallback
+                //  }
+                //],
                 alarm_bindings: [
                   {
                       alarmid: "linePressureAlarm",
                       showHistory: false,
                       filter: {
-                          alarmtypes: ["Digital", "High", "High High", "Low", "Low Low"]
+                          alarmtypes: ["High", "Low"]
 
                       },
                       columns: [
@@ -91,25 +92,6 @@
                 ],
 
                 refresh_callback: update_data
-                //THEHUB TEST
-                //serverUrl: 'http://thehub.savageservices.com:58725',
-                //debug: true,
-                //watch_tags: [
-                //    "AccuLoad.DAPLConnection.GSV.Value",
-                //    "AccuLoad.DAPLConnection.GV.Value",
-                //    "AccuLoad.DAPLConnection.Status.Value",
-                //    "AccuLoad.DAPLConnection.TransactionNumber.Value",
-                //    "AccuLoad.DAPLTransfer.GSV.Value",
-                //    "AccuLoad.DAPLTransfer.GV.Value",
-                //    "AccuLoad.DAPLTransfer.Status.Value",
-                //    "AccuLoad.DAPLTransfer.TransactionNumber.Value",
-                //    "Volume.Tank201BBLs.Value",
-                //    "Volume.Tank202BBLs.Value",
-                //    "Volume.Tank203BBLs.Value",
-                //    "Volume.Tank204BBLs.Value",
-                //    "Volume.Tank205BBLs.Value"
-                //],
-                //refresh_callback: update_data
 
             };
 
@@ -123,44 +105,16 @@
                 OPC_config.token = OPC.token;
             };
 
-            //$("#btnPowerOn").click(function () {
-            //    OPC.set_value("TestPLC.LogicalMainSwitch.Value", "toggle");
-            //});
-            //$("#btnTimerReset").click(function () {
-            //    OPC.set_value("TestPLC.TimerReset.Value", "toggle");
-            //})
 
         });
 
 
-        //debugger;
         function update_data(data) {
-            //var clickMainSwitch = OPC.get_value("TestPLC.MainSwitch.Value");
-            //clickMainSwitch = (clickMainSwitch == "True") ? "On" : "Off";
-            //var clickLogSwitch = OPC.get_value("TestPLC.LogicalMainSwitch.Value");
-            //clickLogSwitch = (clickLogSwitch == "True") ? "On" : "Off";
-            //var clickTimerSetpoint = OPC.get_value("TestPLC.TimerOnSetpoint.Value");
-            //var clickTimerReset = OPC.get_value("TestPLC.TimerReset.Value");
-            //var clickTimerStatus = OPC.get_value("TestPLC.TimerStatus.Value");
-            //var clickTimerValue = OPC.get_value("TestPLC.TimerValue.Value");
-            //var clickLinePressure = OPC.get_value("TestPLC.LinePressure.Value");
 
-            //$("#mainButton").html(clickMainSwitch);
-            //$("#logicalButton").html(clickLogSwitch);
-            //$("#timerOnSetpoint").html(clickTimerSetpoint);
-            //$("#timerReset").html(clickTimerReset);
-            //$("#timerStatus").html(clickTimerStatus);
-            //$("#timerValue").html(clickTimerValue);
-            //$("#btnPowerOn").html("System: " + clickLogSwitch);
-            //$("#btnTimerReset").html("Reset Timer");
-            //var tankHigh = tags.HighRange;
-
-            //var tankLevel = tags.Trenton.Tank201BBLs.Value.val;
-            //var tankHighLevel = tags.Trenton.Tank201BBLs.props.Value.HighLevel;
         }
 
         // This configures the options object used by Flot for rendering the grid.
-        // It includes information on how the timestamp is rendered in the x-axis.  
+        // It includes information on how the timestamp is rendered in the x-axis.
         // All of these settings are documented at http://www.flotcharts.org/
 
         grid_options = {
@@ -188,7 +142,7 @@
                 //backgroundOpacity: 0.1,
                 //backgroundColor: "#000",
                 //color: "#000"
-                
+
 
             },
             xaxis: {
@@ -259,3 +213,4 @@
 </body>
 
 </html>
+

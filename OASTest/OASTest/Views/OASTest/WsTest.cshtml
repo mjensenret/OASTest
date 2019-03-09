@@ -1,6 +1,8 @@
-﻿@model IEnumerable<OASTest.ViewModels.TagViewModel>
+﻿@using OASTest.ViewModels
+@model IEnumerable<OASTest.ViewModels.TagViewModel>
 @{
     ViewBag.Title = "WsTest";
+    var nodes = Model.Select(x => x.NodeList);
 }
 
 @using (Html.BeginForm())
@@ -8,6 +10,7 @@
     <div id="selectBox">
         @Html.DropDownList("TagGroup", (IEnumerable<SelectListItem>)ViewBag.TagGroups, new { onchange = "this.form.submit();" })
     </div>
+
     <div id="gridView">
         @(Html.DevExtreme().DataGrid()
             .ID("tagGrid")
@@ -24,6 +27,8 @@
                 c.Add()
                 .DataField("Path")
                 .Visible(false);
+                c.Add()
+                .DataField("OASVersion");
                 c.Add()
                 .DataField("Name");
                 c.Add()

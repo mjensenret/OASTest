@@ -1,0 +1,29 @@
+﻿
+
+@(Html.DevExtreme().CircularGauge()
+    .ID("ampGauge")
+    .Scale(s => s
+        .StartValue(0)
+        .EndValue(500)
+        .TickInterval(25)
+        .Label(l => l.UseRangeColors(true))
+    )
+    .RangeContainer(c => c
+        .Palette(VizPalette.Bright)
+        .Ranges(r =>
+        {
+            r.Add().StartValue(0).EndValue(200);
+            r.Add().StartValue(200).EndValue(400);
+            r.Add().StartValue(400).EndValue(500);
+        })
+    )
+    .Title(t => t
+        .Text("Current Amperage - TagNameHere")
+        .Font(f => f.Size(14))
+    )
+    .OnInitialized("loadAmpGauge")
+    .Value(ViewBag.InitValue)
+    
+)
+
+

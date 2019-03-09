@@ -4,8 +4,6 @@ using OASTest.Service;
 using OASTest.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RestSharp;
-using RestSharp.Deserializers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +13,15 @@ using System.Web;
 using System.Web.Mvc;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
-using OASTest.Models;
+using OAS;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace OASTest.Controllers
 {
     public class OASTestController : Controller
     {
         OASRestService svc = new OASRestService();
-        
-
 
         // GET: OASTest
         public ActionResult Index()
@@ -33,7 +31,11 @@ namespace OASTest.Controllers
 
         public async Task<ActionResult> WsTest()
         {
+            
             ViewBag.TagGroups = svc.GetTagGroupsDropdown("");
+
+            ViewBag.OASServers = new SelectList(Enum.GetNames(typeof(NetworkNodes)), NetworkNodes.localhost);
+            ViewBag.OASServer2 = GetSelectListItems();
 
             var tagModel = svc.GetMultipleTagValues("HarringtonStation");
 
@@ -66,7 +68,6 @@ namespace OASTest.Controllers
         public async Task<ActionResult> WsTest(FormCollection form)
         {
             string strDDLValue = form["TagGroup"].ToString();
-            
 
             var tagModel = svc.GetMultipleTagValues(strDDLValue);
 
@@ -135,10 +136,6 @@ namespace OASTest.Controllers
 
             return View();
         }
-
-
-
-
 
         public ActionResult _tankChart()
         {
@@ -264,6 +261,41 @@ namespace OASTest.Controllers
 
 
 
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var enumValues = Enum.GetValues(typeof(NetworkNodes)) as NetworkNodes[];
+            if (enumValues == null)
+                return null;
+
+            foreach(var enumValue in enumValues)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = enumValue.ToString(),
+                    Text = GetNetworkNodeName(enumValue)
+                });
+            }
+
+            return selectList;
+        }
+
+        private string GetNetworkNodeName(NetworkNodes value)
+        {
+            var memberInfo = value.GetType().GetMember(value.ToString());
+            if (memberInfo.Length != 1)
+                return null;
+
+            var displayAttribute = memberInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false)
+                as DisplayAttribute[];
+
+            if (displayAttribute == null || displayAttribute.Length != 1)
+                return null;
+
+            return displayAttribute[0].Name;
         }
     }
 }

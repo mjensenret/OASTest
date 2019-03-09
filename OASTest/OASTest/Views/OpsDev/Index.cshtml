@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-12 col-lg-4">
+        @Html.Action("AmpGauge")
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function loadAmpGauge() {
+        var gauge = $("#ampGauge").dxCircularGauge("instance");
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("getGaugeValue")',
+            success: function (response) {
+                window.console.log("In the success function.");
+                window.console.log(response);
+
+                gauge.option("value", response);
+            },
+            error: function () {
+                window.console.log("Something failed");
+            }
+        })
+    }
+</script>
+
